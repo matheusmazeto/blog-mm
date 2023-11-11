@@ -28,8 +28,6 @@ export async function getAllPaths(): Promise<
 > {
   const postPaths = glob.sync(`${POSTS_PATH}/**/*.mdx`)
 
-  console.log({ postPaths })
-
   return postPaths.map((postPath) => {
     const relativePath = path.relative(POSTS_PATH, postPath)
     const slug = relativePath.replace(/(index)?\.mdx$/, '').replace(/\/$/, '')
@@ -121,7 +119,7 @@ export async function getPostContent(slug: string): Promise<Post> {
     files: mdxFiles,
     mdxOptions(options) {
       options.remarkPlugins = [
-        // ...(options.remarkPlugins ?? []),
+        ...(options.remarkPlugins ?? []),
         remarkGfm,
         remarkMdxImages,
       ]

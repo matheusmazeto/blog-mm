@@ -1,6 +1,6 @@
 import { json } from '@remix-run/node'
 import { Link, useLoaderData } from '@remix-run/react'
-import { getAllPosts, sortPostsByDate } from 'utils/blog.server'
+import { getAllPosts, sortPostsByDate } from '~/utils/blog.server'
 
 export async function loader() {
   const posts = await getAllPosts()
@@ -13,7 +13,6 @@ export async function loader() {
 export default function Posts() {
   const { posts } = useLoaderData<typeof loader>()
 
-  // console.log({ posts })
 
   return (
     <main>
