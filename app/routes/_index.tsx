@@ -1,5 +1,6 @@
 import type { MetaFunction } from '@remix-run/node'
 import { Link } from '@remix-run/react'
+import { Button } from "~/components/ui/button"
 
 export const meta: MetaFunction = () => {
   return [
@@ -14,6 +15,11 @@ export default function Index() {
       <Link to="/blog" className="text-xl text-blue-600 underline">
         Blog Posts
       </Link>
+
+ 
+    <div>
+      <Button>Click me</Button>
+    </div>
     </div>
   )
 }

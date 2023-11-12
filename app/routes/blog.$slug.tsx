@@ -7,15 +7,14 @@ import {
   SiGithub as GitHubIcon,
 } from 'react-icons/si'
 import {
-  getAllPaths,
   getPostContent,
   getRecommendedPosts,
-} from '../utils/blog.server'
+} from '~/lib/blog.server'
 import { Container, Grid } from '../components/grid'
 import { mdxComponents } from '../components/mdx'
 import { PostThumbnail } from '../components/postThumbnail'
 // import { getOrigin } from '../utils/getOrigin'
-import { formatDate } from '../utils/date'
+import { formatDate } from '../lib/utils/date'
 import { PostTitle } from '../components/post/postTitle'
 import { PostMeta } from '../components/post/postMeta'
 import { json } from '@remix-run/node'

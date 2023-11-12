@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { formatDate } from '../../utils/date'
+import { formatDate } from '../../lib/utils/date'
 
 export function PostMeta({
   category,
