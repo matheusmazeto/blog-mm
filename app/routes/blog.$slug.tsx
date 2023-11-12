@@ -3,6 +3,10 @@ import React, { useMemo } from 'react'
 import * as mdxBundler from 'mdx-bundler/client/index.js'
 import { motion } from 'framer-motion'
 import {
+  SiTwitter as TwitterIcon,
+  SiGithub as GitHubIcon,
+} from 'react-icons/si'
+import {
   getAllPaths,
   getPostContent,
   getRecommendedPosts,
@@ -70,8 +74,7 @@ export default function BlogPost(): JSX.Element {
                   target="_blank"
                   className="p-5 hover:text-black"
                 >
-                  twitter
-                  {/* <TwitterIcon /> */}
+                  <TwitterIcon />
                 </a>
                 <img
                   src="https://github.com/kettanaito.png"
@@ -84,8 +87,7 @@ export default function BlogPost(): JSX.Element {
                   target="_blank"
                   className="p-5 hover:text-black"
                 >
-                  github
-                  {/* <GitHubIcon /> */}
+                  <GitHubIcon />
                 </a>
                 <hr className="border border-gray-200" />
               </div>

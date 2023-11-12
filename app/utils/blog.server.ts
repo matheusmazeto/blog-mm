@@ -1,13 +1,10 @@
-import fs from 'fs/promises'
-import path from 'path'
-import { glob } from 'glob'
 import { existsSync } from 'fs'
+import * as fs from 'fs/promises'
+import * as path from 'path'
+import { invariant } from 'outvariant'
+import { glob } from 'glob'
 import { bundleMDX } from 'mdx-bundler'
 import svgo from 'svgo'
-
-export type PostMarkdown = {
-  title: string
-}
 
 const POSTS_PATH = path.resolve(process.cwd(), 'content/blog')
 const IMAGE_EXTENSIONS = [
@@ -61,10 +58,16 @@ export async function getPostContent(slug: string): Promise<Post> {
     path.resolve(POSTS_PATH, `${slug}/index.mdx`),
   ].find((path) => existsSync(path))
 
+  invariant(
+    filePath,
+    'Failed to get post content for slug "%s": no post found',
+    slug
+  )
+
   const id = Math.random().toString(32).slice(2, 9)
-  const postDir = path.dirname(filePath!)
+  const postDir = path.dirname(filePath)
   const postUrl = createPostUrl(slug)
-  const fileContent = await fs.readFile(filePath!, 'utf8')
+  const fileContent = await fs.readFile(filePath, 'utf8')
 
   /**
    * Support nested imports in MDX files.
@@ -86,7 +89,7 @@ export async function getPostContent(slug: string): Promise<Post> {
         filePath,
         await fs.readFile(path.resolve(postDir, filePath), 'utf8'),
       ]
-    }),
+    })
   )
   const mdxFiles = Object.fromEntries(childFiles)
 
@@ -110,9 +113,8 @@ export async function getPostContent(slug: string): Promise<Post> {
 
   const remarkGfm = await import('remark-gfm').then((x) => x.default)
   const remarkMdxImages = await import('remark-mdx-images').then(
-    (x) => x.default,
+    (x) => x.default
   )
-
   const { code, frontmatter, errors } = await bundleMDX({
     source: fileContent,
     cwd: postDir,
@@ -191,13 +193,13 @@ export function sortPostsByDate(posts: Array<Post>): void {
 
 export async function getRecommendedPosts(
   post: Post,
-  maxCount: number,
+  maxCount: number
 ): Promise<Array<Post>> {
   const allPosts = await getAllPosts()
   const allCategories = Array.from(
     allPosts.reduce((categories, otherPost) => {
       return categories.add(otherPost.frontmatter.category)
-    }, new Set<string>()),
+    }, new Set<string>())
   )
   const otherCategories = allCategories.filter((category) => {
     return category !== post.frontmatter.category
@@ -215,7 +217,7 @@ export async function getRecommendedPosts(
       const keywordsIntersection = post.frontmatter.keywords?.filter(
         (keyword) => {
           return otherPost.frontmatter.keywords?.includes(keyword)
-        },
+        }
       )
 
       return {
